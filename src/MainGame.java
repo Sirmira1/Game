@@ -3,9 +3,9 @@ import org.w3c.dom.ls.LSOutput;
 import java.sql.SQLOutput;
 import java.util.*;
 public class MainGame {
-    String[] beginnersShop = new String[10];
-    String[] intermediateShop = new String[10];
-    String[] advancedShop = new String[10];
+    Node beginnersShop;
+    Node intermediateShop;
+    Node advancedShop;
     boolean gameOn = true;
     Scanner input = new Scanner(System.in);
     Random rand;
@@ -94,27 +94,51 @@ public class MainGame {
         System.out.println("Press B to look at the next boss fight");
         String mG = input.nextLine();
         switch (mG) {
-            case "P", "p" -> openedShop();
+            //case "P", "p" -> openedShop();
             //case "L", "l" ->
         }
 
 
     }
-    public void makeShops () {
-        beginnersShop[0] = "0: Jungle sword";
-        beginnersShop[1] = "1: Blade of the night";
-        beginnersShop[2] = "2: Sword of the undead";
-        beginnersShop[3] = "3: Fire blade";
-        beginnersShop[4] = "4: Helmet from the woods";
-        beginnersShop[5] = "5: The great breastplate";
-        beginnersShop[6] = "6: Armour covered in stones";
-        beginnersShop[7] = "7: Potion by the house recipe";
-        beginnersShop[8] = "8: Potion of health";
-        beginnersShop[9] = "9: Nature's gift";
-
+    public void makeBeginnersShop (String s) {
+        //initiate beginners shop
+        if (beginnersShop == null) {
+            beginnersShop = new Node (null, s, null);
+        } else {
+            Node p = beginnersShop;
+            while (p.next != null) {
+                p = p.next;
+            }
+            p.next = new Node (p, s, null);
+        }
+    }
+    public void makeIntermediateShop (String s) {
+        //initiate beginner shop
+        if (intermediateShop == null) {
+            intermediateShop = new Node (null, s, null);
+        } else {
+            Node p = intermediateShop;
+            while (p.next != null) {
+                p = p.next;
+            }
+            p.next = new Node (p, s, null);
+        }
+    }
+    public void makeAdvancedShop (String s) {
+        //initiate beginner shop
+        if (advancedShop == null) {
+            advancedShop = new Node (null, s, null);
+        } else {
+            Node p = advancedShop;
+            while (p.next != null) {
+                p = p.next;
+            }
+            p.next = new Node (p, s, null);
+        }
     }
     public void openedShop () {
-        makeShops();
+        makeBeginnersShop("Blade of the jungle");
+        makeBeginnersShop();
         System.out.println("Press 1 for beginners shop");
         System.out.println("Press 2 for intermediate shop");
         System.out.println("Press 3 for advanced shop");
