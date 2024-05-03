@@ -44,18 +44,21 @@ public class MainGame {
                 System.out.println("Game started");
                 System.out.println("Difficulty: Easy");
                 easyDifficulty();
+                addItems();
                 mainGame();
             }
             case "M", "m" -> {
                 System.out.println("Game started");
                 System.out.println("Difficulty: Medium");
                 mediumDifficulty();
+                addItems();
                 mainGame();
             }
             case "H", "h" -> {
                 System.out.println("Game started");
                 System.out.println("For the worthy");
                 hardDifficulty();
+                addItems();
                 mainGame();
             }
             case "Q", "q" -> mainMenu();
@@ -87,14 +90,14 @@ public class MainGame {
         System.out.println("Armour: " + player.getArmour());
         System.out.println("Damage: " + player.getDamage());
         System.out.println("You have " + player.getCoins() + " coins");
-        System.out.println("Press P to see the item shop");
+        System.out.println("Press P to see the item shop of the dimension");
         System.out.println("Press L to see the world map");
         System.out.println("Press I to see your inventory");
         System.out.println("Press F to look for a random fight with smaller enemies");
         System.out.println("Press B to look at the next boss fight");
         String mG = input.nextLine();
         switch (mG) {
-            //case "P", "p" -> openedShop();
+            case "P", "p" -> openedShopFirstDimension();
             //case "L", "l" ->
         }
 
@@ -113,7 +116,7 @@ public class MainGame {
         }
     }
     public void makeIntermediateShop (String s) {
-        //initiate beginner shop
+        //initiate intermediate shop
         if (intermediateShop == null) {
             intermediateShop = new Node (null, s, null);
         } else {
@@ -125,7 +128,7 @@ public class MainGame {
         }
     }
     public void makeAdvancedShop (String s) {
-        //initiate beginner shop
+        //initiate advanced shop
         if (advancedShop == null) {
             advancedShop = new Node (null, s, null);
         } else {
@@ -136,53 +139,57 @@ public class MainGame {
             p.next = new Node (p, s, null);
         }
     }
-    public void openedShop () {
-        makeBeginnersShop("Blade of the jungle");
-        makeBeginnersShop();
+    public void addItems () {
+        makeBeginnersShop("1 Blade of the jungle");
+        makeBeginnersShop("2 Sword of the night");
+        makeBeginnersShop("3 Scythe of the undead");
+        makeBeginnersShop("4 Sword of fire");
+        makeBeginnersShop("5 Armour of the jungle");
+        makeBeginnersShop("6 Breastplate of the fallen");
+        makeBeginnersShop("7 Helmet of sparta");
+        makeBeginnersShop("8 Potion by the house recipe");
+        makeBeginnersShop("9 Potion from the nature");
+        makeBeginnersShop("10 Stinky brew");
+        makeIntermediateShop("1 Shadowsteel plate");
+        makeIntermediateShop("2 Dragonhide vestments");
+        makeIntermediateShop("3 Celestial aegis");
+        makeIntermediateShop("4 Stormbreaker blade");
+        makeIntermediateShop("5 Frostbite edge");
+        makeIntermediateShop("6 Flameforged saber");
+        makeIntermediateShop("7 Voidslayer longsword");
+        makeIntermediateShop("8 Vitality draught");
+        makeIntermediateShop("9 Renewal elixir");
+        makeIntermediateShop("10 Healing tonic");
+        makeAdvancedShop("1 Shadowstrike katana");
+        makeAdvancedShop("2 Frostfang scimitar");
+        makeAdvancedShop("3 Legends blade");
+        makeAdvancedShop("4 Royal guardian plate");
+        makeAdvancedShop("5 Elemental warderobe");
+        makeAdvancedShop("6 Runebound mail");
+        makeAdvancedShop("7 Legends armour");
+        makeAdvancedShop("8 Phoenix elixir");
+        makeAdvancedShop("9 Serenety potion");
+        makeAdvancedShop("10 Radiant remedy");
+    }
+    public void openedShopFirstDimension () {
         System.out.println("Press 1 for beginners shop");
-        System.out.println("Press 2 for intermediate shop");
-        System.out.println("Press 3 for advanced shop");
         System.out.println("Press q to go back");
         String oS = input.nextLine();
         switch (oS) {
             case "1" -> {
-                for (String s : beginnersShop) {
-                    System.out.println(s);
-                    System.out.println("Press the corresponding number with the item to see more information");
-                    String c = input.nextLine();
-                    switch (c) {
-                        case "0" -> {
-                            System.out.println(beginnersShop[0]);
-                            System.out.println("An old blade picked up from the jungle");
-                            System.out.println("+ 7 damage");
-                            System.out.println("Price: 50 coins");
-                            System.out.println("Press P to purchase of Q to go back");
-                            String a = input.nextLine();
-                            switch (a) {
-                                case "P", "p" -> {
-                                    player.coins = player.coins - 50;
-                                    player.damage = player.damage + 7;
-                                    beginnersShop[0] = "Sold";
-                                }
-                            }
-                        }
-                        case "1" -> {
-                            System.out.println(beginnersShop[1]);
-                            System.out.println("An old warrior's blade that fought in the night");
-                        }
+                Node p = beginnersShop;
+                while (p != null) {
+                    System.out.println(p.item);
+                    p = p.next;
+                }
+                System.out.println("");
+                System.out.println("Press the corresponding number with the " +
+                        "item to see more info or press Q to go back");
+                String b = input.nextLine();
+                switch (b) {
+                    case "1" -> {
+                        System.out.println("A lost blade found in the jungle");
                     }
-                    System.out.println("Press Q to go back");
-                }
-            }
-            case "2" -> {
-                for (String s : intermediateShop) {
-                    System.out.println(s);
-                }
-            }
-            case "3" -> {
-
-                for (String s : advancedShop) {
-                    System.out.println(s);
                 }
             }
             case "Q", "q" -> mainGame();
