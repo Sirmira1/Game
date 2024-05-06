@@ -1,8 +1,8 @@
 public class Node {
     Node prev;
-    String item;
+    Sword item;
     Node next;
-    public Node (Node prevPassed, String itemPassed, Node nextPassed) {
+    public Node (Node prevPassed, Sword itemPassed, Node nextPassed) {
         prev = prevPassed;
         item = itemPassed;
         next = nextPassed;

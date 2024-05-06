@@ -1,12 +1,13 @@
-import org.w3c.dom.ls.LSOutput;
-
 import java.sql.SQLOutput;
 import java.util.*;
 public class MainGame {
-    Node beginnersShop;
-    Node intermediateShop;
-    Node advancedShop;
-    boolean gameOn = true;
+//    Node beginnersShop;
+//    Node intermediateShop;
+//    Node advancedShop;
+    Object[] inventory = new Object[6];
+    Object[] beginnersShop = new Object[10];
+    Object[] intermediateShop = new Object[10];
+    Object[] advancedShop = new Object[10];
     Scanner input = new Scanner(System.in);
     Random rand;
     Player player;
@@ -44,21 +45,21 @@ public class MainGame {
                 System.out.println("Game started");
                 System.out.println("Difficulty: Easy");
                 easyDifficulty();
-                addItems();
+                makeShops();
                 mainGame();
             }
             case "M", "m" -> {
                 System.out.println("Game started");
                 System.out.println("Difficulty: Medium");
                 mediumDifficulty();
-                addItems();
+                makeShops();
                 mainGame();
             }
             case "H", "h" -> {
                 System.out.println("Game started");
                 System.out.println("For the worthy");
                 hardDifficulty();
-                addItems();
+                makeShops();
                 mainGame();
             }
             case "Q", "q" -> mainMenu();
@@ -103,100 +104,265 @@ public class MainGame {
 
 
     }
-    public void makeBeginnersShop (String s) {
-        //initiate beginners shop
-        if (beginnersShop == null) {
-            beginnersShop = new Node (null, s, null);
-        } else {
-            Node p = beginnersShop;
-            while (p.next != null) {
-                p = p.next;
-            }
-            p.next = new Node (p, s, null);
-        }
+    public void makeShops () {
+        //initiate shops
+        //swords
+        beginnersShop[0] = new Sword ("Sword of the jungle", 7, 50);
+        beginnersShop[1] = new Sword ("Night's blade", 12, 67);
+        beginnersShop[2] = new Sword("Scythe of the undead", 17, 81);
+        beginnersShop[3] = new Sword("Fire blade", 24, 103);
+        //armours
+        beginnersShop[4] = new Armour("Armour of the jungle", 4, 50);
+        beginnersShop[5] = new Armour("Breastplate of the fallen", 8, 64);
+        beginnersShop[6] = new Armour("Spartan helmet", 14, 91);
+        //potions
+        beginnersShop[7] = new Potion("Potion by the house recipe", 50, 50);
+        beginnersShop[8] = new Potion("Potion of the nature", 50, 50);
+        beginnersShop[9] = new Potion("Stinky brew", 50, 50);
     }
-    public void makeIntermediateShop (String s) {
-        //initiate intermediate shop
-        if (intermediateShop == null) {
-            intermediateShop = new Node (null, s, null);
-        } else {
-            Node p = intermediateShop;
-            while (p.next != null) {
-                p = p.next;
-            }
-            p.next = new Node (p, s, null);
-        }
-    }
-    public void makeAdvancedShop (String s) {
-        //initiate advanced shop
-        if (advancedShop == null) {
-            advancedShop = new Node (null, s, null);
-        } else {
-            Node p = advancedShop;
-            while (p.next != null) {
-                p = p.next;
-            }
-            p.next = new Node (p, s, null);
-        }
-    }
-    public void addItems () {
-        makeBeginnersShop("1 Blade of the jungle");
-        makeBeginnersShop("2 Sword of the night");
-        makeBeginnersShop("3 Scythe of the undead");
-        makeBeginnersShop("4 Sword of fire");
-        makeBeginnersShop("5 Armour of the jungle");
-        makeBeginnersShop("6 Breastplate of the fallen");
-        makeBeginnersShop("7 Helmet of sparta");
-        makeBeginnersShop("8 Potion by the house recipe");
-        makeBeginnersShop("9 Potion from the nature");
-        makeBeginnersShop("10 Stinky brew");
-        makeIntermediateShop("1 Shadowsteel plate");
-        makeIntermediateShop("2 Dragonhide vestments");
-        makeIntermediateShop("3 Celestial aegis");
-        makeIntermediateShop("4 Stormbreaker blade");
-        makeIntermediateShop("5 Frostbite edge");
-        makeIntermediateShop("6 Flameforged saber");
-        makeIntermediateShop("7 Voidslayer longsword");
-        makeIntermediateShop("8 Vitality draught");
-        makeIntermediateShop("9 Renewal elixir");
-        makeIntermediateShop("10 Healing tonic");
-        makeAdvancedShop("1 Shadowstrike katana");
-        makeAdvancedShop("2 Frostfang scimitar");
-        makeAdvancedShop("3 Legends blade");
-        makeAdvancedShop("4 Royal guardian plate");
-        makeAdvancedShop("5 Elemental warderobe");
-        makeAdvancedShop("6 Runebound mail");
-        makeAdvancedShop("7 Legends armour");
-        makeAdvancedShop("8 Phoenix elixir");
-        makeAdvancedShop("9 Serenety potion");
-        makeAdvancedShop("10 Radiant remedy");
-    }
+
     public void openedShopFirstDimension () {
-        System.out.println("Press 1 for beginners shop");
-        System.out.println("Press q to go back");
-        String oS = input.nextLine();
-        switch (oS) {
+        printShopItems();
+        System.out.println("You have " + player.coins + " coins");
+        System.out.println("Press the corresponding number with the " +
+                "item to see more info or press any other button to go back");
+        String b = input.nextLine();
+        switch (b) {
             case "1" -> {
-                Node p = beginnersShop;
-                while (p != null) {
-                    System.out.println(p.item);
-                    p = p.next;
-                }
-                System.out.println("");
-                System.out.println("Press the corresponding number with the " +
-                        "item to see more info or press Q to go back");
-                String b = input.nextLine();
-                switch (b) {
-                    case "1" -> {
-                        System.out.println("A lost blade found in the jungle");
+                System.out.println("Are you sure? Y for yes or any other button to return");
+                String p = input.nextLine();
+                switch (p) {
+                    case "Y", "y" -> {
+                        if (player.getCoins() < 50) {
+                            System.out.println("You do not have enough coins to purchase this item");
+                        } else {
+                            Object item = beginnersShop[0];
+                            if (item instanceof Sword) {
+                                Sword sword = (Sword) item;
+                                player.addDamage(sword.getDamage());
+                                System.out.println("Thanks for your purchase");
+                                openedShopFirstDimension();
+                            }
+                        }
+
                     }
+
+                    case null, default -> openedShopFirstDimension();
                 }
             }
-            case "Q", "q" -> mainGame();
-            case null, default -> System.out.println("Invalid input, please press 1, 2, 3 or Q");
+            case "2" -> {
+                System.out.println("Are you sure? Y for yes or any other button to return");
+                String p = input.nextLine();
+                switch (p) {
+                    case "Y", "y" -> {
+                        if (player.getCoins() < 67) {
+                            System.out.println("You do not have enough coins to purchase this item");
+                        } else {
+                            Object item = beginnersShop[1];
+                            if (item instanceof Sword) {
+                                Sword sword = (Sword) item;
+                                player.addDamage(sword.getDamage());
+                                System.out.println("Thanks for your purchase");
+                                openedShopFirstDimension();
+                            }
+                        }
+
+                    }
+
+                    case null, default -> openedShopFirstDimension();
+                }
+            }
+            case "3" -> {
+                System.out.println("Are you sure? Y for yes or any other button to return");
+                String p = input.nextLine();
+                switch (p) {
+                    case "Y", "y" -> {
+                        if (player.getCoins() < 81) {
+                            System.out.println("You do not have enough coins to purchase this item");
+                        } else {
+                            Object item = beginnersShop[2];
+                            if (item instanceof Sword) {
+                                Sword sword = (Sword) item;
+                                player.addDamage(sword.getDamage());
+                                System.out.println("Thanks for your purchase");
+                                openedShopFirstDimension();
+                            }
+                        }
+
+                    }
+
+                    case null, default -> openedShopFirstDimension();
+                }
+            }
+            case "4" -> {System.out.println("Are you sure? Y for yes or any other button to return");
+                String p = input.nextLine();
+                switch (p) {
+                    case "Y", "y" -> {
+                        if (player.getCoins() < 120) {
+                            System.out.println("You do not have enough coins to purchase this item");
+                        } else {
+                            Object item = beginnersShop[0];
+                            if (item instanceof Sword) {
+                                Sword sword = (Sword) item;
+                                player.addDamage(sword.getDamage());
+                                System.out.println("Thanks for your purchase");
+                                openedShopFirstDimension();
+                            }
+                        }
+
+                    }
+
+                    case null, default -> openedShopFirstDimension();
+                }
+            }
+            case "5" -> {System.out.println("Are you sure? Y for yes or any other button to return");
+                String p = input.nextLine();
+                switch (p) {
+                    case "Y", "y" -> {
+                        if (player.getCoins() < 50) {
+                            System.out.println("You do not have enough coins to purchase this item");
+                        } else {
+                            Object item = beginnersShop[0];
+                            if (item instanceof Sword) {
+                                Sword sword = (Sword) item;
+                                player.addDamage(sword.getDamage());
+                                System.out.println("Thanks for your purchase");
+                                openedShopFirstDimension();
+                            }
+                        }
+
+                    }
+
+                    case null, default -> openedShopFirstDimension();
+                }
+            }
+            case "6" -> {System.out.println("Are you sure? Y for yes or any other button to return");
+                String p = input.nextLine();
+                switch (p) {
+                    case "Y", "y" -> {
+                        if (player.getCoins() < 50) {
+                            System.out.println("You do not have enough coins to purchase this item");
+                        } else {
+                            Object item = beginnersShop[0];
+                            if (item instanceof Sword) {
+                                Sword sword = (Sword) item;
+                                player.addDamage(sword.getDamage());
+                                System.out.println("Thanks for your purchase");
+                                openedShopFirstDimension();
+                            }
+                        }
+
+                    }
+
+                    case null, default -> openedShopFirstDimension();
+                }
+            }
+            case "7" -> {System.out.println("Are you sure? Y for yes or any other button to return");
+                String p = input.nextLine();
+                switch (p) {
+                    case "Y", "y" -> {
+                        if (player.getCoins() < 50) {
+                            System.out.println("You do not have enough coins to purchase this item");
+                        } else {
+                            Object item = beginnersShop[0];
+                            if (item instanceof Sword) {
+                                Sword sword = (Sword) item;
+                                player.addDamage(sword.getDamage());
+                                System.out.println("Thanks for your purchase");
+                                openedShopFirstDimension();
+                            }
+                        }
+
+                    }
+
+                    case null, default -> openedShopFirstDimension();
+                }
+            }
+            case "8" -> {System.out.println("Are you sure? Y for yes or any other button to return");
+                String p = input.nextLine();
+                switch (p) {
+                    case "Y", "y" -> {
+                        if (player.getCoins() < 50) {
+                            System.out.println("You do not have enough coins to purchase this item");
+                        } else {
+                            Object item = beginnersShop[0];
+                            if (item instanceof Sword) {
+                                Sword sword = (Sword) item;
+                                player.addDamage(sword.getDamage());
+                                System.out.println("Thanks for your purchase");
+                                openedShopFirstDimension();
+                            }
+                        }
+
+                    }
+
+                    case null, default -> openedShopFirstDimension();
+                }
+            }
+            case "9" -> {
+                System.out.println("Are you sure? Y for yes or any other button to return");
+                String p = input.nextLine();
+                switch (p) {
+                    case "Y", "y" -> {
+                        if (player.getCoins() < 50) {
+                            System.out.println("You do not have enough coins to purchase this item");
+                        } else {
+                            Object item = beginnersShop[0];
+                            if (item instanceof Sword) {
+                                Sword sword = (Sword) item;
+                                player.addDamage(sword.getDamage());
+                                System.out.println("Thanks for your purchase");
+                                openedShopFirstDimension();
+                            }
+                        }
+
+                    }
+
+                    case null, default -> openedShopFirstDimension();
+                }
+            }
+            case "10" -> {
+                System.out.println("Are you sure? Y for yes or any other button to return");
+                String p = input.nextLine();
+                switch (p) {
+                    case "Y", "y" -> {
+                        if (player.getCoins() < 50) {
+                            System.out.println("You do not have enough coins to purchase this item");
+                        } else {
+                            Object item = beginnersShop[0];
+                            if (item instanceof Sword) {
+                                Sword sword = (Sword) item;
+                                player.addDamage(sword.getDamage());
+                                System.out.println("Thanks for your purchase");
+                                openedShopFirstDimension();
+                            }
+                        }
+
+                    }
+
+                    case null, default -> openedShopFirstDimension();
+                }
+            }
+
         }
     }
-    //public void beginnersShopStatistics;
+    public void printShopItems() {
+        // Iterate over the beginnersShop array and print the details of each item
+        for (Object item : beginnersShop) {
+            if (item instanceof Sword) {
+                Sword sword = (Sword) item;
+                System.out.println("Sword: " + sword.getName() + ", Price: " + sword.getCost() + ", Damage: " + sword.getDamage());
+            } else if (item instanceof Armour) {
+                Armour armour = (Armour) item;
+                System.out.println("Armour: " + armour.getName() + ", Price: " + armour.getCost() + ", Armour: " + armour.getArmour());
+            } else if (item instanceof Potion) {
+                Potion potion = (Potion) item;
+                System.out.println("Potion: " + potion.getName() + ", Price: " + potion.getCost() + ", Health: " + potion.getHealth());
+            }
+        }
+    }
+
+
     public void easyDifficulty () {
         bossOne = new Boss (15, 500, 30);
         player = new Player(15, 200, 6, 50);

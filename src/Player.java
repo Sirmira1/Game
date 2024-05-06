@@ -28,4 +28,7 @@ public class Player {
     public int getLevel () {
         return level;
     }
+    public void addDamage(int additionalDamage) {
+        this.damage += additionalDamage;
+    }
 }
