@@ -4,7 +4,9 @@ public class MainGame {
 //    Node beginnersShop;
 //    Node intermediateShop;
 //    Node advancedShop;
-    Object[] inventory = new Object[6];
+    Object[] inventory = new Object[21];
+    Object[] equipped = new Object[6];
+    //inventory and equipped items to be added in further updates
     Object[] beginnersShop = new Object[10];
     Object[] intermediateShop = new Object[10];
     Object[] advancedShop = new Object[10];
@@ -99,26 +101,65 @@ public class MainGame {
         String mG = input.nextLine();
         switch (mG) {
             case "P", "p" -> openedShopFirstDimension();
-            //case "L", "l" ->
+            case "L", "l" -> worldMap();
+            case "I", "i" -> openInventory();
+            case "F", "f" -> miniFight();
+            case "B", "b" -> peekAtBoss();
         }
 
 
     }
+    public void miniFight () {
+        System.out.println("Are you sure you want to look for a fight? " +
+                "Press Y for yes or any other button to go back");
+        switch (input.nextLine()) {
+            case "Y", "y" -> startFight();
+            case null, default -> mainGame();
+        }
+    }
+    public void startFight () {
+        System.out.println("Your ");
+    }
+    public void openInventory () {
+        System.out.println("To be added in future updates");
+        System.out.println("Please stick around :)");
+        System.out.println("Press any button to go back");
+        switch (input.nextLine()) {
+            default -> mainGame();
+        }
+    }
+    public void worldMap () {
+        System.out.println("To be added in future updates");
+        System.out.println("Please stick around :)");
+        System.out.println("Press any button to go back");
+        switch (input.nextLine()) {
+            default -> mainGame();
+        }
+    }
+    public void peekAtBoss () {
+        System.out.println("To be added in future updates");
+        System.out.println("Please stick around :)");
+        System.out.println("Press any button to go back");
+        switch (input.nextLine()) {
+            default -> mainGame();
+        }
+    }
     public void makeShops () {
         //initiate shops
         //swords
-        beginnersShop[0] = new Sword ("Sword of the jungle", 7, 50);
-        beginnersShop[1] = new Sword ("Night's blade", 12, 67);
-        beginnersShop[2] = new Sword("Scythe of the undead", 17, 81);
-        beginnersShop[3] = new Sword("Fire blade", 24, 103);
+        //to experiment with nr passed to make shop simpler
+        beginnersShop[0] = new Sword ("1", "Sword of the jungle", 7, 50);
+        beginnersShop[1] = new Sword ("2", "Night's blade", 12, 67);
+        beginnersShop[2] = new Sword("3", "Scythe of the undead", 17, 81);
+        beginnersShop[3] = new Sword("4", "Fire blade", 24, 103);
         //armours
-        beginnersShop[4] = new Armour("Armour of the jungle", 4, 50);
-        beginnersShop[5] = new Armour("Breastplate of the fallen", 8, 64);
-        beginnersShop[6] = new Armour("Spartan helmet", 14, 91);
+        beginnersShop[4] = new Armour("5", "Armour of the jungle", 4, 50);
+        beginnersShop[5] = new Armour("6", "Breastplate of the fallen", 8, 64);
+        beginnersShop[6] = new Armour("7", "Spartan helmet", 14, 91);
         //potions
-        beginnersShop[7] = new Potion("Potion by the house recipe", 50, 50);
-        beginnersShop[8] = new Potion("Potion of the nature", 50, 50);
-        beginnersShop[9] = new Potion("Stinky brew", 50, 50);
+        beginnersShop[7] = new Potion("8", "Potion by the house recipe", 50, 50);
+        beginnersShop[8] = new Potion("9", "Potion of the nature", 50, 50);
+        beginnersShop[9] = new Potion("10", "Stinky brew", 50, 50);
     }
 
     public void openedShopFirstDimension () {
@@ -135,12 +176,23 @@ public class MainGame {
                     case "Y", "y" -> {
                         if (player.getCoins() < 50) {
                             System.out.println("You do not have enough coins to purchase this item");
-                        } else {
+                            System.out.println("Press any button to go back");
+                            switch (input.nextLine()) {
+                                default -> openedShopFirstDimension();
+                            }
+                        } else if (beginnersShop[0] == null){
+                            System.out.println("Item sold");
+                            System.out.println("Press any button to go back");
+                            switch (input.nextLine()) {
+                                default -> openedShopFirstDimension();
+                            }
+                        }else {
                             Object item = beginnersShop[0];
                             if (item instanceof Sword) {
                                 Sword sword = (Sword) item;
                                 player.addDamage(sword.getDamage());
                                 System.out.println("Thanks for your purchase");
+                                beginnersShop[0] = null;
                                 openedShopFirstDimension();
                             }
                         }
@@ -157,12 +209,23 @@ public class MainGame {
                     case "Y", "y" -> {
                         if (player.getCoins() < 67) {
                             System.out.println("You do not have enough coins to purchase this item");
+                            System.out.println("Press any button to go back");
+                            switch (input.nextLine()) {
+                                default -> openedShopFirstDimension();
+                            }
+                        } else if (beginnersShop[1] == null){
+                            System.out.println("Item sold");
+                            System.out.println("Press any button to go back");
+                            switch (input.nextLine()) {
+                                default -> openedShopFirstDimension();
+                            }
                         } else {
                             Object item = beginnersShop[1];
                             if (item instanceof Sword) {
                                 Sword sword = (Sword) item;
                                 player.addDamage(sword.getDamage());
                                 System.out.println("Thanks for your purchase");
+                                beginnersShop[1] = null;
                                 openedShopFirstDimension();
                             }
                         }
@@ -179,12 +242,23 @@ public class MainGame {
                     case "Y", "y" -> {
                         if (player.getCoins() < 81) {
                             System.out.println("You do not have enough coins to purchase this item");
+                            System.out.println("Press any button to go back");
+                            switch (input.nextLine()) {
+                                default -> openedShopFirstDimension();
+                            }
+                        } else if (beginnersShop[2] == null){
+                            System.out.println("Item sold");
+                            System.out.println("Press any button to go back");
+                            switch (input.nextLine()) {
+                                default -> openedShopFirstDimension();
+                            }
                         } else {
                             Object item = beginnersShop[2];
                             if (item instanceof Sword) {
                                 Sword sword = (Sword) item;
                                 player.addDamage(sword.getDamage());
                                 System.out.println("Thanks for your purchase");
+                                beginnersShop[2] = null;
                                 openedShopFirstDimension();
                             }
                         }
@@ -198,14 +272,25 @@ public class MainGame {
                 String p = input.nextLine();
                 switch (p) {
                     case "Y", "y" -> {
-                        if (player.getCoins() < 120) {
+                        if (player.getCoins() < 103) {
                             System.out.println("You do not have enough coins to purchase this item");
+                            System.out.println("Press any button to go back");
+                            switch (input.nextLine()) {
+                                default -> openedShopFirstDimension();
+                            }
+                        } else if (beginnersShop[3] == null){
+                            System.out.println("Item sold");
+                            System.out.println("Press any button to go back");
+                            switch (input.nextLine()) {
+                                default -> openedShopFirstDimension();
+                            }
                         } else {
-                            Object item = beginnersShop[0];
+                            Object item = beginnersShop[3];
                             if (item instanceof Sword) {
                                 Sword sword = (Sword) item;
                                 player.addDamage(sword.getDamage());
                                 System.out.println("Thanks for your purchase");
+                                beginnersShop[3] = null;
                                 openedShopFirstDimension();
                             }
                         }
@@ -221,12 +306,23 @@ public class MainGame {
                     case "Y", "y" -> {
                         if (player.getCoins() < 50) {
                             System.out.println("You do not have enough coins to purchase this item");
+                            System.out.println("Press any button to go back");
+                            switch (input.nextLine()) {
+                                default -> openedShopFirstDimension();
+                            }
+                        } else if (beginnersShop[4] == null){
+                            System.out.println("Item sold");
+                            System.out.println("Press any button to go back");
+                            switch (input.nextLine()) {
+                                default -> openedShopFirstDimension();
+                            }
                         } else {
-                            Object item = beginnersShop[0];
-                            if (item instanceof Sword) {
-                                Sword sword = (Sword) item;
-                                player.addDamage(sword.getDamage());
+                            Object item = beginnersShop[4];
+                            if (item instanceof Armour) {
+                                Armour armour = (Armour) item;
+                                player.addArmour(armour.getArmour());
                                 System.out.println("Thanks for your purchase");
+                                beginnersShop[4] = null;
                                 openedShopFirstDimension();
                             }
                         }
@@ -240,14 +336,25 @@ public class MainGame {
                 String p = input.nextLine();
                 switch (p) {
                     case "Y", "y" -> {
-                        if (player.getCoins() < 50) {
+                        if (player.getCoins() < 64) {
                             System.out.println("You do not have enough coins to purchase this item");
+                            System.out.println("Press any button to go back");
+                            switch (input.nextLine()) {
+                                default -> openedShopFirstDimension();
+                            }
+                        } else if (beginnersShop[5] == null){
+                            System.out.println("Item sold");
+                            System.out.println("Press any button to go back");
+                            switch (input.nextLine()) {
+                                default -> openedShopFirstDimension();
+                            }
                         } else {
-                            Object item = beginnersShop[0];
-                            if (item instanceof Sword) {
-                                Sword sword = (Sword) item;
-                                player.addDamage(sword.getDamage());
+                            Object item = beginnersShop[5];
+                            if (item instanceof Armour) {
+                                Armour armour = (Armour) item;
+                                player.addArmour(armour.getArmour());
                                 System.out.println("Thanks for your purchase");
+                                beginnersShop[5] = null;
                                 openedShopFirstDimension();
                             }
                         }
@@ -261,14 +368,25 @@ public class MainGame {
                 String p = input.nextLine();
                 switch (p) {
                     case "Y", "y" -> {
-                        if (player.getCoins() < 50) {
+                        if (player.getCoins() < 91) {
                             System.out.println("You do not have enough coins to purchase this item");
+                            System.out.println("Press any button to go back");
+                            switch (input.nextLine()) {
+                                default -> openedShopFirstDimension();
+                            }
+                        } else if (beginnersShop[6] == null){
+                            System.out.println("Item sold");
+                            System.out.println("Press any button to go back");
+                            switch (input.nextLine()) {
+                                default -> openedShopFirstDimension();
+                            }
                         } else {
-                            Object item = beginnersShop[0];
-                            if (item instanceof Sword) {
-                                Sword sword = (Sword) item;
-                                player.addDamage(sword.getDamage());
+                            Object item = beginnersShop[6];
+                            if (item instanceof Armour) {
+                                Armour armour = (Armour) item;
+                                player.addArmour(armour.getArmour());
                                 System.out.println("Thanks for your purchase");
+                                beginnersShop[6] = null;
                                 openedShopFirstDimension();
                             }
                         }
@@ -284,12 +402,23 @@ public class MainGame {
                     case "Y", "y" -> {
                         if (player.getCoins() < 50) {
                             System.out.println("You do not have enough coins to purchase this item");
+                            System.out.println("Press any button to go back");
+                            switch (input.nextLine()) {
+                                default -> openedShopFirstDimension();
+                            }
+                        } else if (beginnersShop[7] == null){
+                            System.out.println("Item sold");
+                            System.out.println("Press any button to go back");
+                            switch (input.nextLine()) {
+                                default -> openedShopFirstDimension();
+                            }
                         } else {
-                            Object item = beginnersShop[0];
-                            if (item instanceof Sword) {
-                                Sword sword = (Sword) item;
-                                player.addDamage(sword.getDamage());
+                            Object item = beginnersShop[7];
+                            if (item instanceof Potion) {
+                                Potion potion = (Potion) item;
+                                player.addHealth(potion.getHealth());
                                 System.out.println("Thanks for your purchase");
+                                beginnersShop[7] = null;
                                 openedShopFirstDimension();
                             }
                         }
@@ -306,12 +435,23 @@ public class MainGame {
                     case "Y", "y" -> {
                         if (player.getCoins() < 50) {
                             System.out.println("You do not have enough coins to purchase this item");
+                            System.out.println("Press any button to go back");
+                            switch (input.nextLine()) {
+                                default -> openedShopFirstDimension();
+                            }
+                        } else if (beginnersShop[8] == null){
+                            System.out.println("Item sold");
+                            System.out.println("Press any button to go back");
+                            switch (input.nextLine()) {
+                                default -> openedShopFirstDimension();
+                            }
                         } else {
-                            Object item = beginnersShop[0];
-                            if (item instanceof Sword) {
-                                Sword sword = (Sword) item;
-                                player.addDamage(sword.getDamage());
+                            Object item = beginnersShop[8];
+                            if (item instanceof Potion) {
+                                Potion potion = (Potion) item;
+                                player.addHealth(potion.getHealth());
                                 System.out.println("Thanks for your purchase");
+                                beginnersShop[8] = null;
                                 openedShopFirstDimension();
                             }
                         }
@@ -328,12 +468,23 @@ public class MainGame {
                     case "Y", "y" -> {
                         if (player.getCoins() < 50) {
                             System.out.println("You do not have enough coins to purchase this item");
+                            System.out.println("Press any button to go back");
+                            switch (input.nextLine()) {
+                                default -> openedShopFirstDimension();
+                            }
+                        } else if (beginnersShop[9] == null){
+                            System.out.println("Item sold");
+                            System.out.println("Press any button to go back");
+                            switch (input.nextLine()) {
+                                default -> openedShopFirstDimension();
+                            }
                         } else {
                             Object item = beginnersShop[0];
-                            if (item instanceof Sword) {
-                                Sword sword = (Sword) item;
-                                player.addDamage(sword.getDamage());
+                            if (item instanceof Potion) {
+                                Potion potion = (Potion) item;
+                                player.addHealth(potion.getHealth());
                                 System.out.println("Thanks for your purchase");
+                                beginnersShop[9] = null;
                                 openedShopFirstDimension();
                             }
                         }
@@ -343,7 +494,7 @@ public class MainGame {
                     case null, default -> openedShopFirstDimension();
                 }
             }
-
+        case null, default -> mainGame();
         }
     }
     public void printShopItems() {
@@ -351,32 +502,31 @@ public class MainGame {
         for (Object item : beginnersShop) {
             if (item instanceof Sword) {
                 Sword sword = (Sword) item;
-                System.out.println("Sword: " + sword.getName() + ", Price: " + sword.getCost() + ", Damage: " + sword.getDamage());
+                System.out.println(sword.nrInShop + " " + sword.getName() + ", Price: " + sword.getCost() + ", Damage: " + sword.getDamage());
             } else if (item instanceof Armour) {
                 Armour armour = (Armour) item;
-                System.out.println("Armour: " + armour.getName() + ", Price: " + armour.getCost() + ", Armour: " + armour.getArmour());
+                System.out.println(armour.nrInShop + " " + armour.getName() + ", Price: " + armour.getCost() + ", Armour: " + armour.getArmour());
             } else if (item instanceof Potion) {
                 Potion potion = (Potion) item;
-                System.out.println("Potion: " + potion.getName() + ", Price: " + potion.getCost() + ", Health: " + potion.getHealth());
+                System.out.println(potion.nrInShop + " " + potion.getName() + ", Price: " + potion.getCost() + ", Health: " + potion.getHealth());
             }
         }
     }
 
-
     public void easyDifficulty () {
         bossOne = new Boss (15, 500, 30);
         player = new Player(15, 200, 6, 50);
-        //npc = new Enemy(rand.nextInt(7) + 1, rand.nextInt(51) + 30, rand.nextInt(9));
+        npc = new Enemy (7, 50, 3);
     }
     public void mediumDifficulty () {
         bossOne = new Boss (25, 2400, 50);
         player = new Player(10, 150, 3, 25);
-        npc = new Enemy(rand.nextInt(16) + 4, rand.nextInt(51) + 30, rand.nextInt(14) + 1);
+        npc = new Enemy(14, 75, 6);
     }
     public void hardDifficulty () {
         bossOne = new Boss(100, 12000, 90);
         player = new Player (6, 100, 0, 0);
-        npc = new Enemy(rand.nextInt(10) + 17, rand.nextInt(61) + 80, rand.nextInt(10) + 10);
+        npc = new Enemy(24, 100, 12);
     }
     public static void main(String[] args) {
         MainGame m1 = new MainGame();

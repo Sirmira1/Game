@@ -2,10 +2,12 @@ public class Armour {
     String name;
     int armour;
     int cost;
-    public Armour (String namePassed, int armourPassed, int costPassed) {
+    String nrInShop;
+    public Armour (String nrPassed, String namePassed, int armourPassed, int costPassed) {
         name =  namePassed;
         armour = armourPassed;
         cost = costPassed;
+        nrInShop = nrPassed;
     }
     public String getName() {
         return name;

@@ -31,4 +31,10 @@ public class Player {
     public void addDamage(int additionalDamage) {
         this.damage += additionalDamage;
     }
+    public void addArmour(int additionalArmour) {
+        this.armour += additionalArmour;
+    }
+    public void addHealth(int additionalHealth) {
+        this.health += additionalHealth;
+    }
 }

@@ -2,10 +2,12 @@ public class Potion {
     String name;
     int health;
     int cost;
-    public Potion (String namePassed, int healthPassed, int costPassed) {
+    String nrInShop;
+    public Potion (String nrPassed, String namePassed, int healthPassed, int costPassed) {
         name = namePassed;
         health = healthPassed;
         cost = costPassed;
+        nrInShop = nrPassed;
     }
     public String getName () {
         return name;
