@@ -1,25 +1,25 @@
 public class Player {
     int level = 1;
     int experience = 0;
-    int health;
-    int armour;
-    int damage;
+    Double health;
+    Double armour;
+    Double damage;
     int coins;
-    public Player (int damagePassed, int healthPassed, int armourPassed,int coinsPassed) {
+    public Player (Double damagePassed, Double healthPassed, Double armourPassed, int coinsPassed) {
         health = healthPassed;
         armour = armourPassed;
         damage = damagePassed;
         coins = coinsPassed;
     }
-    public int getHealth () {
+    public Double getHealth () {
         return health;
     }
 
-    public int getArmour () {
+    public Double getArmour () {
         return armour;
     }
 
-    public int getDamage () {
+    public Double getDamage () {
         return damage;
     }
     public int getCoins () {
@@ -36,5 +36,8 @@ public class Player {
     }
     public void addHealth(int additionalHealth) {
         this.health += additionalHealth;
+    }
+    public void setHealth (double healthPassed) {
+        health = healthPassed;
     }
 }

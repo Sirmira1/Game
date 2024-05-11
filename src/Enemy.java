@@ -1,21 +1,24 @@
 public class Enemy {
-    int health;
-    int armour;
-    int damage;
+    double health;
+    double armour;
+    double damage;
 
-    public Enemy (int damagePassed, int healthPassed, int armourPassed) {
+    public Enemy (double damagePassed, double healthPassed, double armourPassed) {
         health = healthPassed;
         armour = armourPassed;
         damage = damagePassed;
     }
-    public int getHealth () {
+    public double getHealth () {
         return health;
     }
 
-    public int getArmour () {
+    public double getArmour () {
         return armour;
     }
-    public int getDamage () {
+    public double getDamage () {
         return damage;
+    }
+    public void setHealth (double healthPassed) {
+        health = healthPassed;
     }
 }

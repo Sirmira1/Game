@@ -11,10 +11,12 @@ public class MainGame {
     Object[] intermediateShop = new Object[10];
     Object[] advancedShop = new Object[10];
     Scanner input = new Scanner(System.in);
-    Random rand;
+    Random rand = new Random();
     Player player;
     Boss bossOne;
     Enemy npc;
+    double hP;
+    double hN;
     public MainGame () {
         System.out.println("WELCOME");
         mainMenu();
@@ -118,7 +120,151 @@ public class MainGame {
         }
     }
     public void startFight () {
-        System.out.println("Your ");
+        fightStats();
+        attackHappening();
+    }
+    public void attackHappening () {
+        System.out.println("Select your attack:");
+        System.out.println("A for basic attack");
+        System.out.println("E for a spin attack");
+        System.out.println("X for a critical attack");
+        System.out.println("Press H for more info");
+        System.out.println("Choose your attack:");
+       switch (input.nextLine()) {
+           case "A", "a" -> baseAttack();
+           case "E", "e" -> spinAttack();
+           case "X", "x" -> criticalAttack();
+           case "H", "h" -> moreInfo();
+           default -> attackHappening();
+       }
+    }
+    private void baseAttack () {
+        npc.health -= player.damage;
+        System.out.println("You dealt " + player.getDamage() + " damage.");
+        if (npc.getHealth() <= 0) {
+            npc.health = 0.0;
+            System.out.println("Your enemy now has " +  npc.getHealth() + " health");
+        }else {
+            System.out.println("Your enemy now has " + npc.getHealth() + " health.");
+        }
+        System.out.println("Press any button to continue");
+        switch (input.nextLine()) {
+            default -> checkIfOverP();
+        }
+    }
+    private void spinAttack () {
+        double spinDmg = rand.nextDouble() * (player.getDamage() * 0.4) + (player.getDamage() * 0.8);
+        spinDmg = Math.round(spinDmg * 10.0) / 10.0;
+        npc.health -= spinDmg;
+        System.out.println("You dealt " + spinDmg + " damage.");
+        if (npc.getHealth() <= 0) {
+            npc.health = 0.0;
+            System.out.println("Your enemy now has " +  npc.getHealth() + " health");
+        }else {
+            System.out.println("Your enemy now has " + npc.getHealth() + " health.");
+        }
+        System.out.println("Press any button to continue");
+        switch (input.nextLine()) {
+            default -> checkIfOverP();
+        }
+    }
+    private void criticalAttack () {
+        double critDamage = rand.nextDouble() * (player.getDamage() * 1.0) + (player.getDamage() * 0.5);
+        critDamage = Math.round(critDamage * 10.0) / 10.0;
+        npc.health -= critDamage;
+        System.out.println("You dealt " + critDamage + " damage.");
+        if (npc.getHealth() <= 0) {
+            npc.health = 0.0;
+            System.out.println("Your enemy now has " +  npc.getHealth() + " health");
+        }else {
+            System.out.println("Your enemy now has " + npc.getHealth() + " health.");
+        }
+        System.out.println("Press any button to continue");
+        switch (input.nextLine()) {
+            default -> checkIfOverP();
+        }
+    }
+    public void enemyAttack () {
+        double npcDmg  = npc.getDamage();
+        double attack = 0.15 * npcDmg;
+        double rndDmg = rand.nextDouble() * 2 * attack - attack;
+        double actualDmg = npcDmg + rndDmg;
+        actualDmg = Math.round(actualDmg * 10.0) / 10.0;
+        player.health -= actualDmg;
+        System.out.println("The enemy has dealt " + actualDmg + " damage.");
+        if (player.getHealth() <= 0) {
+            player.health = 0.0;
+            System.out.println("You now have " + player.getHealth() + " health");
+        }else {
+            System.out.println("You now have " + player.getHealth() + " health.");
+        }
+        System.out.println("Press any button to continue");
+        switch (input.nextLine()) {
+            default -> checkIfOverE();
+        }
+    }
+    public void checkIfOverP () {
+        if (player.getHealth() <= 0) {
+            resetHealth();
+            System.out.println("You lost");
+            System.out.println("Press any button to continue");
+            switch (input.nextLine()) {
+                default -> mainGame();
+            }
+        } else if (npc.getHealth() <= 0) {
+            resetHealth();
+            System.out.println("Congratulations, you won!");
+            int randCoins = rand.nextInt(16) + 10;
+            System.out.println("You got " + randCoins + " coins!");
+            player.coins += randCoins;
+            System.out.println("Press any button to go back");
+            switch (input.nextLine()) {
+                default -> mainGame();
+            }
+        } else enemyAttack();
+    }
+    public void checkIfOverE () {
+            if (player.getHealth() <= 0) {
+                resetHealth();
+                System.out.println("You lost");
+                System.out.println("Press any button to continue");
+                switch (input.nextLine()) {
+                    default -> mainGame();
+                }
+            } else if (npc.getHealth() <= 0) {
+                resetHealth();
+                System.out.println("Congratulations, you won!");
+                int randCoins = rand.nextInt(16) + 10;
+                System.out.println("You got " + randCoins + " coins!");
+                player.coins += randCoins;
+                System.out.println("Press any button to go back");
+                switch (input.nextLine()) {
+                    default -> mainGame();
+                }
+            } else attackHappening();
+    }
+    public void fightStats () {
+        System.out.println("Your stats: ");
+        System.out.println("Damage: " + player.getDamage());
+        System.out.println("Armour: " + player.getArmour());
+        System.out.println("Health: " + player.getHealth());
+        System.out.println("Enemy stat: ");
+        System.out.println("Damage: " + npc.getDamage());
+        System.out.println("Armour: " + npc.getArmour());
+        System.out.println("Health: " + npc.getHealth());
+    }
+    public void moreInfo () {
+        System.out.println("A is your basic attack, it deals flat damage, which is " + player.getDamage());
+        System.out.println("E is a spin attack, that deals anywhere from " + (player.damage - (player.damage * 0.2)) + " to " + player.getDamage() + (player.getDamage() * 0.2) + " damage.");
+        System.out.println("X is your riskiest attack, it deals anywhere from " + (player.damage - (player.damage * 0.5)) + " to " + player.damage + (player.damage *0.5) + " damage.");
+        System.out.println("Press any button to go back");
+        switch (input.nextLine()) {
+            default -> startFight();
+        }
+    }
+    private void resetHealth() {
+        player.setHealth(hP);
+        npc.setHealth(hN);
     }
     public void openInventory () {
         System.out.println("To be added in future updates");
@@ -193,6 +339,7 @@ public class MainGame {
                                 player.addDamage(sword.getDamage());
                                 System.out.println("Thanks for your purchase");
                                 beginnersShop[0] = null;
+                                player.coins -= sword.cost;
                                 openedShopFirstDimension();
                             }
                         }
@@ -226,6 +373,7 @@ public class MainGame {
                                 player.addDamage(sword.getDamage());
                                 System.out.println("Thanks for your purchase");
                                 beginnersShop[1] = null;
+                                player.coins -= sword.cost;
                                 openedShopFirstDimension();
                             }
                         }
@@ -259,6 +407,7 @@ public class MainGame {
                                 player.addDamage(sword.getDamage());
                                 System.out.println("Thanks for your purchase");
                                 beginnersShop[2] = null;
+                                player.coins -= sword.cost;
                                 openedShopFirstDimension();
                             }
                         }
@@ -291,6 +440,7 @@ public class MainGame {
                                 player.addDamage(sword.getDamage());
                                 System.out.println("Thanks for your purchase");
                                 beginnersShop[3] = null;
+                                player.coins -= sword.cost;
                                 openedShopFirstDimension();
                             }
                         }
@@ -323,6 +473,7 @@ public class MainGame {
                                 player.addArmour(armour.getArmour());
                                 System.out.println("Thanks for your purchase");
                                 beginnersShop[4] = null;
+                                player.coins -= armour.cost;
                                 openedShopFirstDimension();
                             }
                         }
@@ -355,6 +506,7 @@ public class MainGame {
                                 player.addArmour(armour.getArmour());
                                 System.out.println("Thanks for your purchase");
                                 beginnersShop[5] = null;
+                                player.coins -= armour.cost;
                                 openedShopFirstDimension();
                             }
                         }
@@ -387,6 +539,7 @@ public class MainGame {
                                 player.addArmour(armour.getArmour());
                                 System.out.println("Thanks for your purchase");
                                 beginnersShop[6] = null;
+                                player.coins -= armour.cost;
                                 openedShopFirstDimension();
                             }
                         }
@@ -419,6 +572,7 @@ public class MainGame {
                                 player.addHealth(potion.getHealth());
                                 System.out.println("Thanks for your purchase");
                                 beginnersShop[7] = null;
+                                player.coins -= potion.cost;
                                 openedShopFirstDimension();
                             }
                         }
@@ -452,6 +606,7 @@ public class MainGame {
                                 player.addHealth(potion.getHealth());
                                 System.out.println("Thanks for your purchase");
                                 beginnersShop[8] = null;
+                                player.coins -= potion.cost;
                                 openedShopFirstDimension();
                             }
                         }
@@ -485,6 +640,7 @@ public class MainGame {
                                 player.addHealth(potion.getHealth());
                                 System.out.println("Thanks for your purchase");
                                 beginnersShop[9] = null;
+                                player.coins -= potion.cost;
                                 openedShopFirstDimension();
                             }
                         }
@@ -514,19 +670,40 @@ public class MainGame {
     }
 
     public void easyDifficulty () {
+        double dP = 15.0;
+        hP = 200.0;
+        double aP = 6.0;
+        double dN = 7.0;
+        hN = 50;
+        double aN = 3.0;
         bossOne = new Boss (15, 500, 30);
-        player = new Player(15, 200, 6, 50);
-        npc = new Enemy (7, 50, 3);
+        player = new Player(dP, hP, aP, 50);
+        npc = new Enemy (dN, hN, aN);
     }
     public void mediumDifficulty () {
+        double dP = 10.0;
+        hP = 150.0;
+        double aP = 3.0;
+        double dN = 14.0;
+        hN = 75.0;
+        double aN = 6.0;
         bossOne = new Boss (25, 2400, 50);
-        player = new Player(10, 150, 3, 25);
-        npc = new Enemy(14, 75, 6);
+        player = new Player(dP, hP, aP, 25);
+        npc = new Enemy (dN, hN, aN);
     }
     public void hardDifficulty () {
+        double dP = 6.0;
+        hP = 100.0;
+        double aP = 0.0;
+        double dN = 24.0;
+        hN = 100.0;
+        double aN = 12.0;
         bossOne = new Boss(100, 12000, 90);
-        player = new Player (6, 100, 0, 0);
-        npc = new Enemy(24, 100, 12);
+        player = new Player(dP, hP, aP, 50);
+        npc = new Enemy (dN, hN, aN);
+    }
+    public void setHealthToDefault () {
+
     }
     public static void main(String[] args) {
         MainGame m1 = new MainGame();
