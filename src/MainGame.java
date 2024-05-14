@@ -89,6 +89,7 @@ public class MainGame {
     }
     public void mainGame () {
         System.out.println("Hey there, welcome to your base");
+        System.out.println("Watch out, the game doesn't save your progress (yet :) )");
         System.out.println("You are currently in the normal world in the first dimension");
         System.out.println("Your starting stats: ");
         System.out.println("Health: " + player.getHealth());
@@ -100,6 +101,7 @@ public class MainGame {
         System.out.println("Press I to see your inventory");
         System.out.println("Press F to look for a random fight with smaller enemies");
         System.out.println("Press B to look at the next boss fight");
+        System.out.println("Press Q to quit");
         String mG = input.nextLine();
         switch (mG) {
             case "P", "p" -> openedShopFirstDimension();
@@ -107,6 +109,9 @@ public class MainGame {
             case "I", "i" -> openInventory();
             case "F", "f" -> miniFight();
             case "B", "b" -> peekAtBoss();
+            case "Q", "q" -> System.out.println("Thanks for playing!");
+            case "R", "r" -> gambling();
+            case null, default -> mainGame();
         }
 
 
@@ -139,13 +144,14 @@ public class MainGame {
        }
     }
     private void baseAttack () {
-        npc.health -= player.damage;
-        System.out.println("You dealt " + player.getDamage() + " damage.");
+        double dmg = player.getDamage() - (npc.getArmour() / 10);
+        npc.health -= dmg;
+        System.out.println("You dealt " + dmg + " damage.");
         if (npc.getHealth() <= 0) {
             npc.health = 0.0;
-            System.out.println("Your enemy now has " +  npc.getHealth() + " health");
+            System.out.println("Your enemy now has " +  Math.round(npc.getHealth() * 10.0) / 10.0 + " health");
         }else {
-            System.out.println("Your enemy now has " + npc.getHealth() + " health.");
+            System.out.println("Your enemy now has " + Math.round(npc.getHealth() * 10.0) / 10.0 + " health.");
         }
         System.out.println("Press any button to continue");
         switch (input.nextLine()) {
@@ -153,15 +159,15 @@ public class MainGame {
         }
     }
     private void spinAttack () {
-        double spinDmg = rand.nextDouble() * (player.getDamage() * 0.4) + (player.getDamage() * 0.8);
+        double spinDmg = (rand.nextDouble() * (player.getDamage() * 0.4) + (player.getDamage() * 0.8) - (npc.getArmour() / 10));
         spinDmg = Math.round(spinDmg * 10.0) / 10.0;
         npc.health -= spinDmg;
         System.out.println("You dealt " + spinDmg + " damage.");
         if (npc.getHealth() <= 0) {
             npc.health = 0.0;
-            System.out.println("Your enemy now has " +  npc.getHealth() + " health");
+            System.out.println("Your enemy now has " +  Math.round(npc.getHealth() * 10.0) / 10.0 + " health");
         }else {
-            System.out.println("Your enemy now has " + npc.getHealth() + " health.");
+            System.out.println("Your enemy now has " + Math.round(npc.getHealth() * 10.0) / 10.0 + " health.");
         }
         System.out.println("Press any button to continue");
         switch (input.nextLine()) {
@@ -169,15 +175,15 @@ public class MainGame {
         }
     }
     private void criticalAttack () {
-        double critDamage = rand.nextDouble() * (player.getDamage() * 1.0) + (player.getDamage() * 0.5);
+        double critDamage = (rand.nextDouble() * (player.getDamage() * 1.0) + (player.getDamage() * 0.5));
         critDamage = Math.round(critDamage * 10.0) / 10.0;
         npc.health -= critDamage;
         System.out.println("You dealt " + critDamage + " damage.");
         if (npc.getHealth() <= 0) {
             npc.health = 0.0;
-            System.out.println("Your enemy now has " +  npc.getHealth() + " health");
+            System.out.println("Your enemy now has " +  Math.round(npc.getHealth() * 10.0) / 10.0 + " health");
         }else {
-            System.out.println("Your enemy now has " + npc.getHealth() + " health.");
+            System.out.println("Your enemy now has " + Math.round(npc.getHealth() * 10.0) / 10.0 + " health.");
         }
         System.out.println("Press any button to continue");
         switch (input.nextLine()) {
@@ -188,15 +194,15 @@ public class MainGame {
         double npcDmg  = npc.getDamage();
         double attack = 0.15 * npcDmg;
         double rndDmg = rand.nextDouble() * 2 * attack - attack;
-        double actualDmg = npcDmg + rndDmg;
+        double actualDmg = (npcDmg + rndDmg) - (player.getArmour() / 10);
         actualDmg = Math.round(actualDmg * 10.0) / 10.0;
         player.health -= actualDmg;
         System.out.println("The enemy has dealt " + actualDmg + " damage.");
         if (player.getHealth() <= 0) {
             player.health = 0.0;
-            System.out.println("You now have " + player.getHealth() + " health");
+            System.out.println("You now have " + Math.round(player.getHealth() * 10.0) / 10.0 + " health");
         }else {
-            System.out.println("You now have " + player.getHealth() + " health.");
+            System.out.println("You now have " + Math.round(player.getHealth() * 10.0) / 10.0 + " health.");
         }
         System.out.println("Press any button to continue");
         switch (input.nextLine()) {
@@ -247,16 +253,16 @@ public class MainGame {
         System.out.println("Your stats: ");
         System.out.println("Damage: " + player.getDamage());
         System.out.println("Armour: " + player.getArmour());
-        System.out.println("Health: " + player.getHealth());
+        System.out.println("Health: " + Math.round(player.getHealth() * 10.0) / 10.0);
         System.out.println("Enemy stat: ");
         System.out.println("Damage: " + npc.getDamage());
         System.out.println("Armour: " + npc.getArmour());
-        System.out.println("Health: " + npc.getHealth());
+        System.out.println("Health: " + Math.round(npc.getHealth() * 10.0) / 10.0);
     }
     public void moreInfo () {
         System.out.println("A is your basic attack, it deals flat damage, which is " + player.getDamage());
-        System.out.println("E is a spin attack, that deals anywhere from " + (player.damage - (player.damage * 0.2)) + " to " + player.getDamage() + (player.getDamage() * 0.2) + " damage.");
-        System.out.println("X is your riskiest attack, it deals anywhere from " + (player.damage - (player.damage * 0.5)) + " to " + player.damage + (player.damage *0.5) + " damage.");
+        System.out.println("E is a spin attack, that deals anywhere from " + (player.getDamage() - (player.getDamage() * 0.2)) + " to " + (player.getDamage() + (player.getDamage() * 0.2)) + " damage.");
+        System.out.println("X is your riskiest attack, it deals anywhere from " + (player.getDamage() - (player.getDamage() * 0.5)) + " to " + (player.getDamage() + (player.getDamage() *0.5)) + " damage.");
         System.out.println("Press any button to go back");
         switch (input.nextLine()) {
             default -> startFight();
@@ -314,6 +320,10 @@ public class MainGame {
         System.out.println("Press the corresponding number with the " +
                 "item to see more info or press any other button to go back");
         String b = input.nextLine();
+//        switch (input.nextLine()) {
+//            case "1","2","3","4","5","6","7","8","9","10" -> buyItem();
+//        }
+        // to implement a simpler shop, i have absolutely no clue how
         switch (b) {
             case "1" -> {
                 System.out.println("Are you sure? Y for yes or any other button to return");
@@ -653,6 +663,9 @@ public class MainGame {
         case null, default -> mainGame();
         }
     }
+//    public void buyItem () {
+//        what do i do with this i have no clue
+//    }
     public void printShopItems() {
         // Iterate over the beginnersShop array and print the details of each item
         for (Object item : beginnersShop) {
@@ -670,41 +683,159 @@ public class MainGame {
     }
 
     public void easyDifficulty () {
-        double dP = 15.0;
-        hP = 200.0;
-        double aP = 6.0;
-        double dN = 7.0;
-        hN = 50;
-        double aN = 3.0;
-        bossOne = new Boss (15, 500, 30);
+        double dP = 12.0;
+        hP = 250.0;
+        double aP = 8.0;
+        double dN = 8.0;
+        hN = 60;
+        double aN = 5.0;
+        bossOne = new Boss (15, 1000, 40);
         player = new Player(dP, hP, aP, 50);
         npc = new Enemy (dN, hN, aN);
     }
+
     public void mediumDifficulty () {
         double dP = 10.0;
-        hP = 150.0;
-        double aP = 3.0;
-        double dN = 14.0;
+        hP = 200.0;
+        double aP = 5.0;
+        double dN = 10.0;
         hN = 75.0;
-        double aN = 6.0;
-        bossOne = new Boss (25, 2400, 50);
+        double aN = 7.0;
+        bossOne = new Boss (20, 3000, 60);
         player = new Player(dP, hP, aP, 25);
         npc = new Enemy (dN, hN, aN);
     }
+
     public void hardDifficulty () {
-        double dP = 6.0;
-        hP = 100.0;
-        double aP = 0.0;
-        double dN = 24.0;
-        hN = 100.0;
-        double aN = 12.0;
-        bossOne = new Boss(100, 12000, 90);
-        player = new Player(dP, hP, aP, 50);
+        double dP = 8.0;
+        hP = 150.0;
+        double aP = 2.0;
+        double dN = 12.0;
+        hN = 90.0;
+        double aN = 10.0;
+        bossOne = new Boss(30, 6000, 80);
+        player = new Player(dP, hP, aP, 0);
         npc = new Enemy (dN, hN, aN);
     }
-    public void setHealthToDefault () {
 
+    public void gambling () {
+        System.out.println("Congratulations, you have found an easter egg!");
+        System.out.println("This was made by the developer for fun only, but you may use it as you wish");
+        System.out.println("Note that all the things you read in this easter eggs are FOR JOKES ONLY " +
+                "and YOU SHOULDN'T do any of this in real life.");
+        System.out.println("By continuing you agree that you understand this is for jokes only " +
+                "and is not to be taken seriously.");
+        System.out.println("Press any button to continue or Q to go back");
+        switch (input.nextLine()) {
+            case "Q", "q" -> mainGame();
+            default -> roulette();
+        }
     }
+    public void roulette() {
+        System.out.println("Welcome to the roulette table, a place where you can only win. " +
+                "If you lose by gambling it only means that you did not gamble enough!");
+        System.out.println("You currently have " + player.getCoins() + " coins to gamble with.");
+        System.out.println("Choose how much money you want to gamble with or 0 to go back to the main menu: ");
+
+        int money = 0;
+        try {
+            money = input.nextInt();
+            input.nextLine();
+            if (money > player.getCoins()) {
+                System.out.println("You do not have that much coins to gamble with.");
+                System.out.println("Press any button to go back");
+                switch (input.nextLine()) {
+                    default -> roulette();
+                }
+            } else if (money == 0) {
+                mainGame();
+            } else if (money < 0) {
+                System.out.println("Invalid number.");
+                System.out.println("Press any button to go back.");
+                switch (input.nextLine()) {
+                    default -> roulette();
+                }
+            } else {
+                player.coins -= money;
+                System.out.println("Press R to put it on red, B to put it on black, G to put it on green or any other letter to go back");
+                System.out.println("Black and red multiply your bet by 2 while green multiplies it by 35");
+                System.out.println("Black and red have a 47.5% chance to be picked while green has 5%");
+                double randomNumber = Math.random();
+                String colorChosen;
+                if (randomNumber < 0.475) {
+                    colorChosen = "Red";
+                } else if (randomNumber >= 0.475 && randomNumber < 0.95) {
+                    colorChosen = "Black";
+                } else {
+                    colorChosen = "Green";
+                }
+                switch (input.nextLine()) {
+                    case "R", "r" -> {
+                        if (colorChosen.equals("Red")) {
+                            System.out.println("Red was rolled, you WIN! Keep gambling to win more");
+                            money = money * 2;
+                            player.coins += money;
+                            System.out.println("Press any button to continue.");
+                            switch (input.nextLine()) {
+                                default -> roulette();
+                            }
+                        } else {
+                            System.out.println(colorChosen + " was chosen, keep gambling to make this money back");
+                            System.out.println("Press any button to continue.");
+                            switch (input.nextLine()) {
+                                default -> roulette();
+                            }
+                        }
+                    }
+                    case "B", "b" -> {
+                        if (colorChosen.equals("Black")) {
+                            System.out.println("Black was rolled, you WIN! Keep gambling to win more");
+                            money = money * 2;
+                            player.coins += money;
+                            System.out.println("Press any button to continue.");
+                            switch (input.nextLine()) {
+                                default -> roulette();
+                            }
+                        } else {
+                            System.out.println(colorChosen + " was chosen, keep gambling to make this money back");
+                            System.out.println("Press any button to continue.");
+                            switch (input.nextLine()) {
+                                default -> roulette();
+                            }
+                        }
+                    }
+                    case "G", "g" -> {
+                        if (colorChosen.equals("Green")) {
+                            System.out.println("Green was rolled, you WIN BIG! " +
+                                    "Gambling always pays off! Keep gambling to win more");
+                            money = money * 35;
+                            player.coins += money;
+                            System.out.println("Press any button to continue.");
+                            switch (input.nextLine()) {
+                                default -> roulette();
+                            }
+                        } else {
+                            System.out.println(colorChosen + " was chosen, keep gambling to make this money back");
+                            System.out.println("Press any button to continue.");
+                            switch (input.nextLine()) {
+                                default -> roulette();
+                            }
+                        }
+                    }
+                    default -> {
+                        player.coins =+ money;
+                        roulette();
+                    }
+                }
+            }
+        } catch (InputMismatchException e) {
+            System.out.println("Invalid input. Please enter a valid number.");
+            System.out.println("Press any button to go back");
+            input.nextLine();
+            roulette();
+        }
+    }
+
     public static void main(String[] args) {
         MainGame m1 = new MainGame();
     }
