@@ -1,15 +1,14 @@
-import java.sql.SQLOutput;
 import java.util.*;
 public class MainGame {
 //    Node beginnersShop;
 //    Node intermediateShop;
 //    Node advancedShop;
-    Object[] inventory = new Object[21];
-    Object[] equipped = new Object[6];
+    //Object[] inventory = new Object[21];
+    //Object[] equipped = new Object[6];
     //inventory and equipped items to be added in further updates
     Object[] beginnersShop = new Object[10];
-    Object[] intermediateShop = new Object[10];
-    Object[] advancedShop = new Object[10];
+    //Object[] intermediateShop = new Object[10];
+    //Object[] advancedShop = new Object[10];
     Scanner input = new Scanner(System.in);
     Random rand = new Random();
     Player player;
@@ -154,9 +153,8 @@ public class MainGame {
             System.out.println("Your enemy now has " + Math.round(npc.getHealth() * 10.0) / 10.0 + " health.");
         }
         System.out.println("Press any button to continue");
-        switch (input.nextLine()) {
-            default -> checkIfOverP();
-        }
+        input.nextLine();
+        checkIfOverP();
     }
     private void spinAttack () {
         double spinDmg = (rand.nextDouble() * (player.getDamage() * 0.4) + (player.getDamage() * 0.8) - (npc.getArmour() / 10));
@@ -170,9 +168,8 @@ public class MainGame {
             System.out.println("Your enemy now has " + Math.round(npc.getHealth() * 10.0) / 10.0 + " health.");
         }
         System.out.println("Press any button to continue");
-        switch (input.nextLine()) {
-            default -> checkIfOverP();
-        }
+        input.nextLine();
+        checkIfOverP();
     }
     private void criticalAttack () {
         double critDamage = (rand.nextDouble() * (player.getDamage() * 1.0) + (player.getDamage() * 0.5));
@@ -186,9 +183,8 @@ public class MainGame {
             System.out.println("Your enemy now has " + Math.round(npc.getHealth() * 10.0) / 10.0 + " health.");
         }
         System.out.println("Press any button to continue");
-        switch (input.nextLine()) {
-            default -> checkIfOverP();
-        }
+        input.nextLine();
+        checkIfOverP();
     }
     public void enemyAttack () {
         double npcDmg  = npc.getDamage();
@@ -205,18 +201,16 @@ public class MainGame {
             System.out.println("You now have " + Math.round(player.getHealth() * 10.0) / 10.0 + " health.");
         }
         System.out.println("Press any button to continue");
-        switch (input.nextLine()) {
-            default -> checkIfOverE();
-        }
+        input.nextLine();
+        checkIfOverE();
     }
     public void checkIfOverP () {
         if (player.getHealth() <= 0) {
             resetHealth();
             System.out.println("You lost");
             System.out.println("Press any button to continue");
-            switch (input.nextLine()) {
-                default -> mainGame();
-            }
+            input.nextLine();
+            mainGame();
         } else if (npc.getHealth() <= 0) {
             resetHealth();
             System.out.println("Congratulations, you won!");
@@ -224,9 +218,8 @@ public class MainGame {
             System.out.println("You got " + randCoins + " coins!");
             player.coins += randCoins;
             System.out.println("Press any button to go back");
-            switch (input.nextLine()) {
-                default -> mainGame();
-            }
+            input.nextLine();
+            mainGame();
         } else enemyAttack();
     }
     public void checkIfOverE () {
@@ -234,9 +227,8 @@ public class MainGame {
                 resetHealth();
                 System.out.println("You lost");
                 System.out.println("Press any button to continue");
-                switch (input.nextLine()) {
-                    default -> mainGame();
-                }
+                input.nextLine();
+                mainGame();
             } else if (npc.getHealth() <= 0) {
                 resetHealth();
                 System.out.println("Congratulations, you won!");
@@ -244,9 +236,8 @@ public class MainGame {
                 System.out.println("You got " + randCoins + " coins!");
                 player.coins += randCoins;
                 System.out.println("Press any button to go back");
-                switch (input.nextLine()) {
-                    default -> mainGame();
-                }
+                input.nextLine();
+                mainGame();
             } else attackHappening();
     }
     public void fightStats () {
@@ -264,9 +255,8 @@ public class MainGame {
         System.out.println("E is a spin attack, that deals anywhere from " + (player.getDamage() - (player.getDamage() * 0.2)) + " to " + (player.getDamage() + (player.getDamage() * 0.2)) + " damage.");
         System.out.println("X is your riskiest attack, it deals anywhere from " + (player.getDamage() - (player.getDamage() * 0.5)) + " to " + (player.getDamage() + (player.getDamage() *0.5)) + " damage.");
         System.out.println("Press any button to go back");
-        switch (input.nextLine()) {
-            default -> startFight();
-        }
+        input.nextLine();
+        startFight();
     }
     private void resetHealth() {
         player.setHealth(hP);
@@ -276,25 +266,22 @@ public class MainGame {
         System.out.println("To be added in future updates");
         System.out.println("Please stick around :)");
         System.out.println("Press any button to go back");
-        switch (input.nextLine()) {
-            default -> mainGame();
-        }
+        input.nextLine();
+        mainGame();
     }
     public void worldMap () {
         System.out.println("To be added in future updates");
         System.out.println("Please stick around :)");
         System.out.println("Press any button to go back");
-        switch (input.nextLine()) {
-            default -> mainGame();
-        }
+        input.nextLine();
+        mainGame();
     }
     public void peekAtBoss () {
         System.out.println("To be added in future updates");
         System.out.println("Please stick around :)");
         System.out.println("Press any button to go back");
-        switch (input.nextLine()) {
-            default -> mainGame();
-        }
+        input.nextLine();
+        mainGame();
     }
     public void makeShops () {
         //initiate shops
@@ -333,15 +320,13 @@ public class MainGame {
                         if (player.getCoins() < 50) {
                             System.out.println("You do not have enough coins to purchase this item");
                             System.out.println("Press any button to go back");
-                            switch (input.nextLine()) {
-                                default -> openedShopFirstDimension();
-                            }
+                            input.nextLine();
+                            openedShopFirstDimension();
                         } else if (beginnersShop[0] == null){
                             System.out.println("Item sold");
                             System.out.println("Press any button to go back");
-                            switch (input.nextLine()) {
-                                default -> openedShopFirstDimension();
-                            }
+                            input.nextLine();
+                            openedShopFirstDimension();
                         }else {
                             Object item = beginnersShop[0];
                             if (item instanceof Sword) {
@@ -367,15 +352,13 @@ public class MainGame {
                         if (player.getCoins() < 67) {
                             System.out.println("You do not have enough coins to purchase this item");
                             System.out.println("Press any button to go back");
-                            switch (input.nextLine()) {
-                                default -> openedShopFirstDimension();
-                            }
+                            input.nextLine();
+                            openedShopFirstDimension();
                         } else if (beginnersShop[1] == null){
                             System.out.println("Item sold");
                             System.out.println("Press any button to go back");
-                            switch (input.nextLine()) {
-                                default -> openedShopFirstDimension();
-                            }
+                            input.nextLine();
+                            openedShopFirstDimension();
                         } else {
                             Object item = beginnersShop[1];
                             if (item instanceof Sword) {
@@ -401,15 +384,13 @@ public class MainGame {
                         if (player.getCoins() < 81) {
                             System.out.println("You do not have enough coins to purchase this item");
                             System.out.println("Press any button to go back");
-                            switch (input.nextLine()) {
-                                default -> openedShopFirstDimension();
-                            }
+                            input.nextLine();
+                            openedShopFirstDimension();
                         } else if (beginnersShop[2] == null){
                             System.out.println("Item sold");
                             System.out.println("Press any button to go back");
-                            switch (input.nextLine()) {
-                                default -> openedShopFirstDimension();
-                            }
+                            input.nextLine();
+                            openedShopFirstDimension();
                         } else {
                             Object item = beginnersShop[2];
                             if (item instanceof Sword) {
@@ -434,15 +415,13 @@ public class MainGame {
                         if (player.getCoins() < 103) {
                             System.out.println("You do not have enough coins to purchase this item");
                             System.out.println("Press any button to go back");
-                            switch (input.nextLine()) {
-                                default -> openedShopFirstDimension();
-                            }
+                            input.nextLine();
+                            openedShopFirstDimension();
                         } else if (beginnersShop[3] == null){
                             System.out.println("Item sold");
                             System.out.println("Press any button to go back");
-                            switch (input.nextLine()) {
-                                default -> openedShopFirstDimension();
-                            }
+                            input.nextLine();
+                            openedShopFirstDimension();
                         } else {
                             Object item = beginnersShop[3];
                             if (item instanceof Sword) {
@@ -467,15 +446,13 @@ public class MainGame {
                         if (player.getCoins() < 50) {
                             System.out.println("You do not have enough coins to purchase this item");
                             System.out.println("Press any button to go back");
-                            switch (input.nextLine()) {
-                                default -> openedShopFirstDimension();
-                            }
+                            input.nextLine();
+                            openedShopFirstDimension();
                         } else if (beginnersShop[4] == null){
                             System.out.println("Item sold");
                             System.out.println("Press any button to go back");
-                            switch (input.nextLine()) {
-                                default -> openedShopFirstDimension();
-                            }
+                            input.nextLine();
+                            openedShopFirstDimension();
                         } else {
                             Object item = beginnersShop[4];
                             if (item instanceof Armour) {
@@ -500,15 +477,13 @@ public class MainGame {
                         if (player.getCoins() < 64) {
                             System.out.println("You do not have enough coins to purchase this item");
                             System.out.println("Press any button to go back");
-                            switch (input.nextLine()) {
-                                default -> openedShopFirstDimension();
-                            }
+                            input.nextLine();
+                            openedShopFirstDimension();
                         } else if (beginnersShop[5] == null){
                             System.out.println("Item sold");
                             System.out.println("Press any button to go back");
-                            switch (input.nextLine()) {
-                                default -> openedShopFirstDimension();
-                            }
+                            input.nextLine();
+                            openedShopFirstDimension();
                         } else {
                             Object item = beginnersShop[5];
                             if (item instanceof Armour) {
@@ -533,15 +508,13 @@ public class MainGame {
                         if (player.getCoins() < 91) {
                             System.out.println("You do not have enough coins to purchase this item");
                             System.out.println("Press any button to go back");
-                            switch (input.nextLine()) {
-                                default -> openedShopFirstDimension();
-                            }
+                            input.nextLine();
+                            openedShopFirstDimension();
                         } else if (beginnersShop[6] == null){
                             System.out.println("Item sold");
                             System.out.println("Press any button to go back");
-                            switch (input.nextLine()) {
-                                default -> openedShopFirstDimension();
-                            }
+                            input.nextLine();
+                            openedShopFirstDimension();
                         } else {
                             Object item = beginnersShop[6];
                             if (item instanceof Armour) {
@@ -566,15 +539,13 @@ public class MainGame {
                         if (player.getCoins() < 50) {
                             System.out.println("You do not have enough coins to purchase this item");
                             System.out.println("Press any button to go back");
-                            switch (input.nextLine()) {
-                                default -> openedShopFirstDimension();
-                            }
+                            input.nextLine();
+                            openedShopFirstDimension();
                         } else if (beginnersShop[7] == null){
                             System.out.println("Item sold");
                             System.out.println("Press any button to go back");
-                            switch (input.nextLine()) {
-                                default -> openedShopFirstDimension();
-                            }
+                            input.nextLine();
+                            openedShopFirstDimension();
                         } else {
                             Object item = beginnersShop[7];
                             if (item instanceof Potion) {
@@ -600,15 +571,13 @@ public class MainGame {
                         if (player.getCoins() < 50) {
                             System.out.println("You do not have enough coins to purchase this item");
                             System.out.println("Press any button to go back");
-                            switch (input.nextLine()) {
-                                default -> openedShopFirstDimension();
-                            }
+                            input.nextLine();
+                            openedShopFirstDimension();
                         } else if (beginnersShop[8] == null){
                             System.out.println("Item sold");
                             System.out.println("Press any button to go back");
-                            switch (input.nextLine()) {
-                                default -> openedShopFirstDimension();
-                            }
+                            input.nextLine();
+                            openedShopFirstDimension();
                         } else {
                             Object item = beginnersShop[8];
                             if (item instanceof Potion) {
@@ -634,15 +603,13 @@ public class MainGame {
                         if (player.getCoins() < 50) {
                             System.out.println("You do not have enough coins to purchase this item");
                             System.out.println("Press any button to go back");
-                            switch (input.nextLine()) {
-                                default -> openedShopFirstDimension();
-                            }
+                            input.nextLine();
+                            openedShopFirstDimension();
                         } else if (beginnersShop[9] == null){
                             System.out.println("Item sold");
                             System.out.println("Press any button to go back");
-                            switch (input.nextLine()) {
-                                default -> openedShopFirstDimension();
-                            }
+                            input.nextLine();
+                            openedShopFirstDimension();
                         } else {
                             Object item = beginnersShop[0];
                             if (item instanceof Potion) {
@@ -744,17 +711,15 @@ public class MainGame {
             if (money > player.getCoins()) {
                 System.out.println("You do not have that much coins to gamble with.");
                 System.out.println("Press any button to go back");
-                switch (input.nextLine()) {
-                    default -> roulette();
-                }
+                input.nextLine();
+                roulette();
             } else if (money == 0) {
                 mainGame();
             } else if (money < 0) {
                 System.out.println("Invalid number.");
                 System.out.println("Press any button to go back.");
-                switch (input.nextLine()) {
-                    default -> roulette();
-                }
+                input.nextLine();
+                roulette();
             } else {
                 player.coins -= money;
                 System.out.println("Press R to put it on red, B to put it on black, G to put it on green or any other letter to go back");
@@ -776,15 +741,13 @@ public class MainGame {
                             money = money * 2;
                             player.coins += money;
                             System.out.println("Press any button to continue.");
-                            switch (input.nextLine()) {
-                                default -> roulette();
-                            }
+                            input.nextLine();
+                            roulette();
                         } else {
                             System.out.println(colorChosen + " was chosen, keep gambling to make this money back");
                             System.out.println("Press any button to continue.");
-                            switch (input.nextLine()) {
-                                default -> roulette();
-                            }
+                            input.nextLine();
+                            roulette();
                         }
                     }
                     case "B", "b" -> {
@@ -793,15 +756,13 @@ public class MainGame {
                             money = money * 2;
                             player.coins += money;
                             System.out.println("Press any button to continue.");
-                            switch (input.nextLine()) {
-                                default -> roulette();
-                            }
+                            input.nextLine();
+                            roulette();
                         } else {
                             System.out.println(colorChosen + " was chosen, keep gambling to make this money back");
                             System.out.println("Press any button to continue.");
-                            switch (input.nextLine()) {
-                                default -> roulette();
-                            }
+                            input.nextLine();
+                            roulette();
                         }
                     }
                     case "G", "g" -> {
@@ -811,15 +772,13 @@ public class MainGame {
                             money = money * 35;
                             player.coins += money;
                             System.out.println("Press any button to continue.");
-                            switch (input.nextLine()) {
-                                default -> roulette();
-                            }
+                            input.nextLine();
+                            roulette();
                         } else {
                             System.out.println(colorChosen + " was chosen, keep gambling to make this money back");
                             System.out.println("Press any button to continue.");
-                            switch (input.nextLine()) {
-                                default -> roulette();
-                            }
+                            input.nextLine();
+                            roulette();
                         }
                     }
                     default -> {
