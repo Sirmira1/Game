@@ -823,7 +823,7 @@ public class MainGame {
                         }
                     }
                     default -> {
-                        player.coins =+ money;
+                        player.coins += money;
                         roulette();
                     }
                 }
