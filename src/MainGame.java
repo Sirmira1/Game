@@ -6,6 +6,7 @@ public class MainGame {
     //Object[] inventory = new Object[21];
     //Object[] equipped = new Object[6];
     //inventory and equipped items to be added in further updates
+    Boss [] bossList = new Boss[3];
     Object[] beginnersShop = new Object[10];
     //Object[] intermediateShop = new Object[10];
     //Object[] advancedShop = new Object[10];
@@ -277,11 +278,23 @@ public class MainGame {
         mainGame();
     }
     public void peekAtBoss () {
-        System.out.println("To be added in future updates");
-        System.out.println("Please stick around :)");
-        System.out.println("Press any button to go back");
-        input.nextLine();
-        mainGame();
+        int i = 0;
+        if (bossList[i] == null) {
+            i++;
+        } else {
+            Boss boss = bossList[1];
+            System.out.println("Your next boss has: " +
+                    boss.getDamage() + " damage, " + boss.getHealth() + " health and "
+                    + boss.getArmour() + " armour.");
+        }
+//        System.out.println("To be added in future updates");
+//        System.out.println("Please stick around :)");
+//        System.out.println("Press any button to go back");
+//        input.nextLine();
+//        mainGame();
+    }
+    public void showNextBoss () {
+
     }
     public void makeShops () {
         //initiate shops
@@ -656,7 +669,9 @@ public class MainGame {
         double dN = 8.0;
         hN = 60;
         double aN = 5.0;
-        bossOne = new Boss (15, 1000, 40);
+        bossList[0] = new Boss (15, 1000, 40);
+        bossList[1] = new Boss (45, 2500, 60);
+        bossList[2] = new Boss (70, 4000, 75);
         player = new Player(dP, hP, aP, 50);
         npc = new Enemy (dN, hN, aN);
     }
@@ -668,7 +683,9 @@ public class MainGame {
         double dN = 10.0;
         hN = 75.0;
         double aN = 7.0;
-        bossOne = new Boss (20, 3000, 60);
+        bossList[0] = new Boss (20, 3000, 60);
+        bossList[1] = new Boss (45, 4000, 70);
+        bossList[2] = new Boss (75, 6000, 80);
         player = new Player(dP, hP, aP, 25);
         npc = new Enemy (dN, hN, aN);
     }
@@ -680,7 +697,9 @@ public class MainGame {
         double dN = 12.0;
         hN = 90.0;
         double aN = 10.0;
-        bossOne = new Boss(30, 6000, 80);
+        bossList[0] = new Boss (30, 6000, 80);
+        bossList[1] = new Boss (60, 8000, 87);
+        bossList[2] = new Boss (100, 10000, 95);
         player = new Player(dP, hP, aP, 0);
         npc = new Enemy (dN, hN, aN);
     }
