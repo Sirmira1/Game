@@ -1,22 +1,22 @@
 public class Boss {
-    int health;
-    int armour;
-    int damage;
-    public Boss (int damagePassed, int healthPassed, int armourPassed) {
+    double health;
+    double armour;
+    double damage;
+    public Boss (double damagePassed, double healthPassed, double armourPassed) {
         health = healthPassed;
         armour = armourPassed;
         damage = damagePassed;
     }
 
-    public int getHealth () {
+    public double getHealth () {
         return health;
     }
 
-    public int getArmour () {
+    public double getArmour () {
         return armour;
     }
 
-    public int getDamage () {
+    public double getDamage () {
         return damage;
     }
 }

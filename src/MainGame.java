@@ -12,8 +12,11 @@ public class MainGame {
     //Object[] advancedShop = new Object[10];
     Scanner input = new Scanner(System.in);
     Random rand = new Random();
+    Object currentEnemy;
+    Object currentWorld;
+    Object dimensionNr;
     Player player;
-    Boss bossOne;
+    Boss currentBoss;
     Enemy npc;
     double hP;
     double hN;
@@ -246,7 +249,7 @@ public class MainGame {
         System.out.println("Damage: " + player.getDamage());
         System.out.println("Armour: " + player.getArmour());
         System.out.println("Health: " + Math.round(player.getHealth() * 10.0) / 10.0);
-        System.out.println("Enemy stat: ");
+        System.out.println("Enemy stats: ");
         System.out.println("Damage: " + npc.getDamage());
         System.out.println("Armour: " + npc.getArmour());
         System.out.println("Health: " + Math.round(npc.getHealth() * 10.0) / 10.0);
@@ -271,30 +274,40 @@ public class MainGame {
         mainGame();
     }
     public void worldMap () {
-        System.out.println("To be added in future updates");
-        System.out.println("Please stick around :)");
-        System.out.println("Press any button to go back");
-        input.nextLine();
-        mainGame();
+        //work in progress
+        //will probably crash the program if used while the program is running as it is not finished
+        System.out.println("You are currently in the " + currentWorld + " in the " + dimensionNr + " dimension.");
     }
     public void peekAtBoss () {
         int i = 0;
         if (bossList[i] == null) {
             i++;
         } else {
-            Boss boss = bossList[1];
+            currentBoss = bossList[i];
             System.out.println("Your next boss has: " +
-                    boss.getDamage() + " damage, " + boss.getHealth() + " health and "
-                    + boss.getArmour() + " armour.");
-        }
-//        System.out.println("To be added in future updates");
-//        System.out.println("Please stick around :)");
-//        System.out.println("Press any button to go back");
-//        input.nextLine();
-//        mainGame();
-    }
-    public void showNextBoss () {
+                    currentBoss.getDamage() + " damage, " + currentBoss.getHealth() + " health and "
+                    + currentBoss.getArmour() + " armour.");
+            System.out.println("Do you want to fight this boss right now?" +
+                    "Press Y if yes or any other button to go back");
+            switch (input.nextLine()) {
+                case "Y", "y" -> startFightBoss();
+                case null, default -> mainGame();
+            }
 
+        }
+
+
+        }
+    public void startFightBoss() {
+        System.out.println("Your stats: ");
+        System.out.println("Damage: " + player.getDamage());
+        System.out.println("Armour: " + player.getArmour());
+        System.out.println("Health: " + Math.round(player.getHealth() * 10.0) / 10.0);
+        System.out.println("Boss stats: ");
+        System.out.println("Damage: " + currentBoss.getDamage());
+        System.out.println("Armour: " + currentBoss.getArmour());
+        System.out.println("Health: " + Math.round(currentBoss.getHealth() * 10.0) / 10.0);
+        //idk what to do to not make it repetitive
     }
     public void makeShops () {
         //initiate shops
